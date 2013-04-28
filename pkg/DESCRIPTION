@@ -1,0 +1,39 @@
+Package: survMisc
+Imports:
+    stats,
+    graphics,
+    utils,
+    survival,
+    KMsurv
+Depends:
+    survival,
+    data.table,
+    zoo
+Maintainer: Chris Dardis <christopherdardis@gmail.com>
+License: GPL-2
+Title: Miscellaneous functions for survival data.
+Type: Package
+Author: Chris Dardis
+Description: A collection of functions for analysis of survival data. These
+    extend the methods available in package survival.
+Version: 0.2
+Date: 2013-03-15
+Collate:
+    'btumors.R'
+    'tneSurv.R'
+    'survEst.R'
+    'calcSurv.R'
+    'comp2Surv.R'
+    'tneSurvfit.R'
+    'covMatSurv.R'
+    'compNSurv.R'
+    'tneSurvByGroup.R'
+    'compSurvfit.R'
+    'gastric.R'
+    'lrSS.R'
+    'meanSurv.R'
+    'plotSurv.R'
+    'quantileSurv.R'
+    'tneBMT.R'
+    'tneKidney.R'
+    'whas100.R'
