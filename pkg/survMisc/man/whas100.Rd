@@ -3,25 +3,7 @@
 \alias{whas100}
 \title{Worcester Heart Attack Study WHAS100 Data}
 \format{A data frame with 100 rows and 9 columns.
-All columns are \code{integer}, apart from admitdate and foldate which are \code{date}, and bmi which is \code{numeric}.
-\cr \cr
-Columns are: \describe{
- \item{id}{ID code}
- \item{admitdate}{Admission Date}
- \item{foldate}{Follow Up Date}
- \item{los}{Length of Hospital Stay (days)}
- \item{lenfol}{Follow Up Time (days)}
- \item{fstat}{Follow Up Status \describe{
-   \item{1}{dead}
-   \item{0}{alive}
-   }}
- \item{age}{Age (years)}
- \item{gender}{\describe{
-   \item{0}{male}
-   \item{0}{female}
-   }}
- \item{bmi}{Body Mass Index}
-}}
+All columns are \code{integer}, apart from admitdate and foldate which are \code{date}, and bmi which is \code{numeric}.}
 \source{
   \href{http://www.mmnt.net/db/0/0/ftp.wiley.com/public/sci_tech_med/survival}{Wiley
   FTP}.
@@ -37,12 +19,19 @@ Columns are: \describe{
   during thirteen 1-year periods beginning in 1975 and
   extending through 2001 on all MI patients admitted to
   hospitals in the Worcester, Massachusetts Standard
-  Metropolitan Statistical Area.
+  Metropolitan Statistical Area. \cr Columns are:
+  \describe{ \item{id}{ID code} \item{admitdate}{Admission
+  Date} \item{foldate}{Follow Up Date} \item{los}{Length of
+  Hospital Stay (days)} \item{lenfol}{Follow Up Time
+  (days)} \item{fstat}{Follow Up Status \describe{
+  \item{1}{dead} \item{0}{alive} }} \item{age}{Age (years)}
+  \item{gender}{\describe{ \item{0}{male} \item{0}{female}
+  }} \item{bmi}{Body Mass Index} }
 }
 \references{
-  Hosmer D, Lemeshow S, May S 2008 \emph{Applied Survival
-  Analysis: Regression Modeling of Time to Event Data}, 2nd
-  edition. New York: Wiley and Sons Inc.
+  Hosmer D, Lemeshow S, May S. Applied Survival Analysis:
+  Regression Modeling of Time to Event Data, 2nd edition.
+  John Wiley and Sons Inc., New York, NY, 2008.
 }
 \keyword{datasets}
 

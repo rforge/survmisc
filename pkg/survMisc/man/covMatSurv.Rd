@@ -17,11 +17,11 @@
   each group.}
 }
 \value{
-  An array. First two dimensions = no. groups. Third
-  dimension is no. observations (time points). Where there
-  are two groups, the resulting sparse square matrix at
-  time \eqn{i} has diagonal elements: \deqn{v_i = -
-  \frac{n0_i n1_i e_i (n_i-e_i)}{n_i^2(n_i-1)}}{
+  An array. First two dimensions = no. groups. \cr Third
+  dimension is no. observations (time points). \cr \cr
+  Where there are two groups, the resulting sparse square
+  matrix at time \eqn{i} has diagonal elements: \deqn{v_i =
+  - \frac{n0_i n1_i e_i (n_i-e_i)}{n_i^2(n_i-1)}}{
   n0(i).n1(i).e(i).(n(i)-e(i)) / n(i)^2.(n(i) -1)} where
   \eqn{n1} is the no. at risk in group 1. \cr \cr For more
   than two groups, the resulting square matrix has diagonal
@@ -43,12 +43,11 @@
   column corresponding to a group.
 }
 \examples{
-data(tneKidney)
+\dontrun{data(tneKidney)
 covMatSurv(t=tneKidney$t,n=tneKidney$n,e=tneKidney$e,n1=tneKidney$n_1)
 }
+}
 \seealso{
-  \code{\link{comp2Surv}}
-
-  \code{\link{compNSurv}}
+  Called by \code{\link{comp}}
 }
 
