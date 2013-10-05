@@ -171,7 +171,8 @@ dxPlot.coxph <- function(x, ...,
     e1 <- model.frame(x)[, 1][, "status"]
 ###----------------------------------------
 ### Cox-Snell residuals
-    coxSnellRes <- e1 - survival:::residuals.coxph(x, type="martingale")
+### residuals below calls survival:::residuals.coxph
+    coxSnellRes <- e1 - residuals(x, type="martingale")
 ### intercept-only model
     s1 <- survfit(Surv(coxSnellRes, e1) ~ 1)
 ### hazard for intercept-only model
@@ -234,8 +235,8 @@ If not linear, suggests discretised version of covariate preferable \n (note no 
 ### refit as intercept only
         f2 <- stats::as.formula(".~1")
         c2 <- stats::update(x, formula=f2)
-### get residuals (hidden method in survival)
-        r1 <- survival:::residuals.coxph(c2, type="martingale")
+### residuals below calls survival:::residuals.coxph
+        r1 <- residuals(c2, type="martingale")
 ### get names of the coefficients from model.frame
 ### note excluding Surv
         mf1 <- model.frame(x)[, i]
