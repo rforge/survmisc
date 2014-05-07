@@ -1,6 +1,7 @@
 \name{gamTerms}
 \alias{gamTerms}
-\title{Individual terms of a Generalized Additive or Cox Proportional
+\title{Individual terms of a Generalized Additive
+or Cox Proportional
 Hazard Model}
 \usage{
   gamTerms(fit, se.fit = TRUE, link = FALSE, weights)
@@ -43,8 +44,8 @@ identical( names(temp), c("constant", "temperature", "wind") )
 dim(temp$wind)
 ### plot the fit versus square root of wind speed
 yy <- cbind(temp$wind[, 2],
-      temp$wind[, 2] - 1.96*temp$wind[, 3],
-      temp$wind[, 2] + 1.96*temp$wind[, 3])
+            temp$wind[, 2] - 1.96*temp$wind[, 3],
+            temp$wind[, 2] + 1.96*temp$wind[, 3])
 ### Adding the constant makes this a plot of actual y (ozone)
 ### at the mean temp
 yy <- yy + temp$constant
