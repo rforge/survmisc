@@ -1,6 +1,5 @@
 ##' @name autoplot.survfit
 ##' @export autoplot.survfit
-##' @aliases autoplot.survfit
 ##' @method autoplot survfit
 ##' @description Uses \code{ggplot2} to generate survival curves
 ##' (Kaplan-Meier plot) and a table showing no. of events per time period
