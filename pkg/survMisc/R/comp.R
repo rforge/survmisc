@@ -143,6 +143,7 @@ comp <- function(x, ...){
 ##' emphasising differences later in time, gives a p-value of 0.04.
 ##'
 ##' @examples
+##' \dontrun{
 ##' ### 2 curves
 ##' data(kidney,package="KMsurv")
 ##' s1 <- survfit(Surv(time=time, event=delta) ~ type, data=kidney)
@@ -162,7 +163,7 @@ comp <- function(x, ...){
 ##' data(gastric)
 ##' s5 <- survfit(Surv(time, event) ~ group, data=gastric)
 ##' comp(s5)
-##'
+##' }
 ##' @references Gehan A.
 ##' A Generalized Wilcoxon Test for Comparing Arbitrarily
 ##' Singly-Censored Samples.
@@ -222,8 +223,11 @@ comp.survfit <- function(x, ..., FHp=1, FHq=1, lim=1e4, scores=NULL) {
 ##' @method comp coxph
 ##' @S3method comp coxph
 ##' @examples
+##' \dontrun{
+##' data(kidney,package="KMsurv")
 ##' c1 <- coxph(Surv(time=time, event=delta) ~ type, data=kidney )
 ##' comp(c1)
+##' }
 comp.coxph <- function(x, ..., FHp=1, FHq=1, scores=NULL, lim=1e4){
      if (!class(x)=="coxph") stop("Only applies to object of class 'coxph'")
      if (FHp<0|FHq<0) stop("Values for p and q for Fleming-Harrington tests must be >=0")

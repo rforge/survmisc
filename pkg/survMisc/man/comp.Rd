@@ -148,6 +148,7 @@
   later in time, gives a p-value of 0.04.
 }
 \examples{
+\dontrun{
 ### 2 curves
 data(kidney,package="KMsurv")
 s1 <- survfit(Surv(time=time, event=delta) ~ type, data=kidney)
@@ -167,8 +168,12 @@ comp(s4)
 data(gastric)
 s5 <- survfit(Surv(time, event) ~ group, data=gastric)
 comp(s5)
+}
+\dontrun{
+data(kidney,package="KMsurv")
 c1 <- coxph(Surv(time=time, event=delta) ~ type, data=kidney )
 comp(c1)
+}
 }
 \references{
   Gehan A. A Generalized Wilcoxon Test for Comparing
