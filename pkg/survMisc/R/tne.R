@@ -123,7 +123,7 @@ tne.survfit <- function(x, ...,
     if (length(s1)==0) {
         dt1 <- data.table("I" = rep(1, nrow(mf)))
     }
-    return( .getTne(dt1, mf=mf, eventsOnly=eventsOnly, return=return) )
+    return( .getTne(dt1=dt1, mf=mf, eventsOnly=eventsOnly, return=return) )
 }
 ##' @rdname tne
 ##' @aliases tne.coxph
@@ -156,7 +156,7 @@ tne.coxph <- function(x, ...,
     }
 ### get model matrix
     dt1 <- data.table(model.matrix(mt, mf, contrasts))
-    return( .getTne(dt1, mf, eventsOnly=eventsOnly, return=return) )
+    return( .getTne(dt1=dt1, mf=mf, eventsOnly=eventsOnly, return=return) )
 }
 ##' @rdname tne
 ##' @aliases tne.formula
@@ -193,7 +193,7 @@ tne.formula <- function(x, ...,
     }
 ### get model matrix
     dt1 <- data.table(model.matrix(mt, mf, contrasts))
-    return( .getTne(dt1, mf, eventsOnly=eventsOnly,
+    return( .getTne(dt1=dt1, mf=mf, eventsOnly=eventsOnly,
                     return=return, nameStrata=nameStrata) )
 }
 ###
@@ -201,7 +201,7 @@ tne.formula <- function(x, ...,
 ### .getTne used by tne.coxph, tne.formula and tne.survfit
 ###----------------------------------------
 ###
-.getTne <- function(dt1, mf,
+.getTne <- function(dt1=dt1, mf=mf,
                     eventsOnly=FALSE,
                     return=c("table", "list", "merged"),
                     nameStrata=TRUE){

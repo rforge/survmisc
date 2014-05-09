@@ -6,11 +6,6 @@ Imports:
     combinat,
     Hmisc,
     zoo,
-    survival,
-    stats,
-    ggplot2,
-    data.table,
-    rpart,
     gam,
     KMsurv,
     km.ci
