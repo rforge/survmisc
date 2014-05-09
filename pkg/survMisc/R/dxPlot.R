@@ -56,13 +56,16 @@ dxPlot <- function(x, ...){
 ##' The Cox model assumes that the hazard function satisfies:
 ##' \deqn{\lambda_{i}(t) = \lambda_0(t) \exp(X_i\beta)}{
 ##'  h[i](t) = h[0](t) exp (X[i]Beta)}
-##' That is, for a continuous variable, an unit increase in the variable produces the same
-##' change in risk across the value of the variable. (E.g. an increase of age of 5 years leads to the same
+##' That is, for a continuous variable, an unit increase
+##' in the variable produces the same
+##' change in risk across the value of the variable.
+##' (E.g. an increase of age of 5 years leads to the same
 ##' change in hazard no matter what the increase is from or to).
 ##' \cr \cr
 ##' To verify this is the case, a null model is fitted
 ##' (i.e no coefficients, similar to intercept-only model in linear regression).
-##' Martingale residuals are calcuated for this. Plots of these residuals against the values of each of the
+##' Martingale residuals are calcuated for this.
+##' Plots of these residuals against the values of each of the
 ##' predictors in the model are shown.
 ##' \cr \cr
 ##' If the correct model for covariate \eqn{j}
@@ -112,7 +115,8 @@ dxPlot <- function(x, ...){
 ##' @return Graphs as described above. Plotted with base graphics.
 ##'
 ##' @note
-##' Caution - for plots to verify proportional hazards: the variance of the curves is
+##' Caution - for plots to verify proportional hazards:
+##' the variance of the curves is
 ##' not constant over time.
 ##'
 ##' @references Examples are from
@@ -169,8 +173,9 @@ dxPlot.coxph <- function(x, ...,
     e1 <- model.frame(x)[, 1][, "status"]
 ###----------------------------------------
 ### Cox-Snell residuals
-    coxSnellRes <- e1 - survival:::residuals.coxph(x, type="martingale")
-### intercept-only model
+### from survival:::residuals.coxph
+    coxSnellRes <- e1 - residuals(x, type="martingale")
+    ### intercept-only model
     s1 <- survfit(Surv(coxSnellRes, e1) ~ 1)
 ### hazard for intercept-only model
     H0 <- cumsum(s1$n.event / s1$n.risk)
@@ -233,7 +238,7 @@ If not linear, suggests discretised version of covariate preferable \n (note no 
         f2 <- stats::as.formula(".~1")
         c2 <- stats::update(x, formula=f2)
 ### get residuals (hidden method in survival)
-        r1 <- survival:::residuals.coxph(c2, type="martingale")
+        r1 <- residuals(c2, type="martingale")
 ### get names of the coefficients from model.frame
 ### note excluding Surv
         mf1 <- model.frame(x)[, i]

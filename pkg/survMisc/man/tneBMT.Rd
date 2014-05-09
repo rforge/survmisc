@@ -2,8 +2,7 @@
 \name{tneBMT}
 \alias{tneBMT}
 \title{Time, no. at risk, no. events for BMT data}
-\format{A data frame with 76 rows and 9 columns.
-\cr
+\format{A data frame with 76 rows and 9 columns
 Columns are:
 \describe{
  \item{t}{time}
@@ -37,7 +36,7 @@ Columns are:
   \href{http://bloodjournal.hematologylibrary.org/content/78/3/838.full.pdf}{Blood}
 }
 \seealso{
-  \code{bmt} in package \code{KMsurv}
+  \code{bmt} in package {KMsurv}
 }
 \keyword{datasets}
 

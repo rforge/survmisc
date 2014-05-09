@@ -4,7 +4,8 @@
 ##' @method autoplot rpart
 ##' @title Plot a recursive partitioning tree using \code{ggplot2}
 ##' @include genSurv.R
-##' @param object An object of class \code{rpart} as returned by \code{rpart::rpart()}
+##' @param object An object of class \code{rpart} as
+##' returned by \code{rpart::rpart()}
 ##' @param ... Additional arguments (not implemented)
 ##' @param title Title for plot
 ##' @param titSize Title text size
@@ -239,7 +240,7 @@ autoplot.rpart <- function(object,
         g1 <- g1 +
             geom_segment(data=d1[d1$y!=d1$yend, ],
                          aes(x=x, y=yM, xend=xend, yend=ym),
-                         size=lineSize, arrow=arrow())
+                         size=lineSize, arrow=arrows())
     }
 ### add small differences to y to separate from lines
     dif1 <- diff(range(d2$y))

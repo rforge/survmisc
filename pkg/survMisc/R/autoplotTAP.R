@@ -61,6 +61,6 @@ autoplot.tableAndPlot <- function(object, ...,
         grobs[[i]]$widths[2:5] <- as.list(maxwidth)
     }
 ### plot
-    do.call("grid.arrange", c(grobs, nrow = 2,
+    do.call(gridExtra::grid.arrange, c(grobs, nrow = 2,
                               heights=list(c(plotHeight,tabHeight))))
 }

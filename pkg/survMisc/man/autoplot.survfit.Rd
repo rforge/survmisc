@@ -142,8 +142,11 @@ autoplot(s1, legend=FALSE)$plot
 data(rectum.dat, package="km.ci")
 s1 <- survfit(Surv(time, status) ~ 1, data=rectum.dat)
 ### change confidence intervals to log Equal-Precision confidence bands
+\dontrun{
+library(km.ci)
 km.ci::km.ci(s1, method="logep")
 autoplot(s1, type="fill", legend=FALSE)$plot
+}
 }
 \author{
   Chris Dardis. Based on existing work by R. Saccilotto,

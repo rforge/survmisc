@@ -159,16 +159,14 @@ comp(survfit(Surv(time=t2, event=d3) ~ group, data=bmt))
 data(alloauto, package="KMsurv")
 s3 <- survfit(Surv(time, delta) ~ type, data=alloauto)
 comp(s3, FHp=0, FHq=1)
-### see trend tests
+### trend tests
 data(larynx, package="KMsurv")
 s4 <- survfit(Surv(time, delta) ~ stage, data=larynx)
 comp(s4)
 ### Renyi tests
-\dontrun{
-data("gastric", package="survMisc")
+data(gastric)
 s5 <- survfit(Surv(time, event) ~ group, data=gastric)
 comp(s5)
-}
 c1 <- coxph(Surv(time=time, event=delta) ~ type, data=kidney )
 comp(c1)
 }

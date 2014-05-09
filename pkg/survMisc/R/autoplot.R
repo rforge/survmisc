@@ -91,8 +91,11 @@
 ##' data(rectum.dat, package="km.ci")
 ##' s1 <- survfit(Surv(time, status) ~ 1, data=rectum.dat)
 ##' ### change confidence intervals to log Equal-Precision confidence bands
+##' \dontrun{
+##' library(km.ci)
 ##' km.ci::km.ci(s1, method="logep")
 ##' autoplot(s1, type="fill", legend=FALSE)$plot
+##' }
 autoplot.survfit <- function(object, ...,
                              xlab="Time",
                              ylab="Survival",
@@ -102,8 +105,8 @@ autoplot.survfit <- function(object, ...,
                              axisLabSize=10,
                              survSize=0.5,
                              type=c("single", "CI", "fill"),
-                             palette=c("Dark2", "Set2", "Accent", "Paired",
-                             "Pastel1", "Pastel2", "Set1", "Set3"),
+                             palette=c("Dark2","Set2","Accent","Paired",
+                             "Pastel1","Pastel2","Set1","Set3"),
                              jitter=c("none", "noEvents", "all"),
                              censShape=3,
                              censSize=5,
@@ -155,14 +158,14 @@ autoplot.survfit <- function(object, ...,
 ### add column for strata
 ### (using data.table here as avoids duplication when adding rows later)
 ### also rename strata as 'st' to avoid calling survival::function
-    dt1 <- data.table(time=object$time,
-                      n.risk=object$n.risk,
-                      n.event=object$n.event,
-                      n.censor = object$n.censor,
-                      surv=object$surv,
-                      upper=object$upper,
-                      lower=object$lower,
-                      st=as.factor(st1))
+    dt1 <- data.table::data.table(time=object$time,
+                                  n.risk=object$n.risk,
+                                  n.event=object$n.event,
+                                  n.censor = object$n.censor,
+                                  surv=object$surv,
+                                  upper=object$upper,
+                                  lower=object$lower,
+                                  st=as.factor(st1))
 ### make two rows for each stratum
 ### for time=0 to time=time of first event
     dt2 <- rbindlist(list(dt1[, .SD[1, ], by=st],
