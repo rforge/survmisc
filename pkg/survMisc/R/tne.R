@@ -89,6 +89,7 @@ tne.Surv <- function(x, ..., eventsOnly=FALSE){
 ##' @method tne survfit
 ##' @S3method tne survfit
 ##' @examples
+##' \dontrun{
 ##' ### survfit object
 ##' data(kidney, package="KMsurv")
 ##' s1 <- survfit(Surv(time=time, event=delta) ~ type, data=kidney)
@@ -101,6 +102,7 @@ tne.Surv <- function(x, ..., eventsOnly=FALSE){
 ##' data(bmt, package="KMsurv")
 ##' tne(survfit(Surv(t2, d3) ~ z3 +z10, data=bmt), return="merged")
 ##' tne(survfit(Surv(t2, d3) ~ 1, data=bmt))
+##' }
 tne.survfit <- function(x, ...,
                         eventsOnly=FALSE,
                         return=c("table", "list", "merged"),
@@ -123,19 +125,22 @@ tne.survfit <- function(x, ...,
     if (length(s1)==0) {
         dt1 <- data.table("I" = rep(1, nrow(mf)))
     }
-    return( .getTne(dt1=dt1, mf=mf, eventsOnly=eventsOnly, return=return) )
+    return( .getTne(dt1=dt1, mf=mf, eventsOnly=eventsOnly,
+                    return=return, nameStrata=nameStrata) )
 }
 ##' @rdname tne
 ##' @aliases tne.coxph
 ##' @method tne coxph
 ##' @S3method tne coxph
 ##' @examples
+##' \dontrun{
 ##' ### coxph object
 ##' data(kidney, package="KMsurv")
 ##' c1 <- coxph(Surv(time=time, event=delta) ~ type, data=kidney)
 ##' tne(c1)
 ##' tne(c1, return="list")
 ##' tne(coxph(Surv(t2, d3) ~ z3*z10, data=bmt))
+##' }
 tne.coxph <- function(x, ...,
                       eventsOnly=FALSE,
                       return=c("table", "list", "merged"),
@@ -156,13 +161,15 @@ tne.coxph <- function(x, ...,
     }
 ### get model matrix
     dt1 <- data.table(model.matrix(mt, mf, contrasts))
-    return( .getTne(dt1=dt1, mf=mf, eventsOnly=eventsOnly, return=return) )
+    return( .getTne(dt1=dt1, mf=mf, eventsOnly=eventsOnly,
+                    return=return, nameStrata=nameStrata) )
 }
 ##' @rdname tne
 ##' @aliases tne.formula
 ##' @method tne formula
 ##' @S3method tne formula
 ##' @examples
+##' \dontrun{
 ##' ### formula object
 ##' data(kidney, package="KMsurv")
 ##' ### this doesn't work
@@ -172,6 +179,7 @@ tne.coxph <- function(x, ...,
 ##' ### example where each list element has only one row
 ##' ### also names are impractical
 ##' tne(Surv(time=t2, event=d3) ~ ., data=bmt, return="list", nameStrata=FALSE)
+##' }
 tne.formula <- function(x, ...,
                         eventsOnly=FALSE,
                         return=c("table", "list", "merged"),

@@ -80,6 +80,7 @@ df0 <- data.frame(t=c(1,1,2,3,5,8,13,21),
 s1 <- Surv(df0$t, df0$e, type="right")
 tne(s1)
 tne(s1, eventsOnly=TRUE)
+\dontrun{
 ### survfit object
 data(kidney, package="KMsurv")
 s1 <- survfit(Surv(time=time, event=delta) ~ type, data=kidney)
@@ -92,12 +93,16 @@ tne(survfit(Surv(time, delta) ~ factor(stage) + age, data=larynx))
 data(bmt, package="KMsurv")
 tne(survfit(Surv(t2, d3) ~ z3 +z10, data=bmt), return="merged")
 tne(survfit(Surv(t2, d3) ~ 1, data=bmt))
+}
+\dontrun{
 ### coxph object
 data(kidney, package="KMsurv")
 c1 <- coxph(Surv(time=time, event=delta) ~ type, data=kidney)
 tne(c1)
 tne(c1, return="list")
 tne(coxph(Surv(t2, d3) ~ z3*z10, data=bmt))
+}
+\dontrun{
 ### formula object
 data(kidney, package="KMsurv")
 ### this doesn't work
@@ -107,6 +112,7 @@ tne(Surv(time=t2, event=d3) ~ ., data=bmt)
 ### example where each list element has only one row
 ### also names are impractical
 tne(Surv(time=t2, event=d3) ~ ., data=bmt, return="list", nameStrata=FALSE)
+}
 }
 \references{
   Example using \code{kidney} data is from: Klein J,
