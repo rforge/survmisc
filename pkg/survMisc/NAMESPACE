@@ -1,3 +1,4 @@
+import(data.table, ggplot2, rpart, survival)
 export(AIC)
 export(AICc)
 export(autoplot.rpart)
