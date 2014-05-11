@@ -6,6 +6,8 @@ Imports:
     combinat,
     Hmisc,
     zoo,
+    km.ci,
+    KMsurv
 Depends:
     survival,
     stats,
