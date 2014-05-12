@@ -1,4 +1,5 @@
 import(data.table, ggplot2, rpart, survival)
+import(gam, km.ci, KMsurv)
 export(AIC)
 export(AICc)
 export(autoplot.rpart)

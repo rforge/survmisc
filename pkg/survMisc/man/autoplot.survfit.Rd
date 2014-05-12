@@ -7,7 +7,7 @@
     title = "Marks show times with censoring",
     titTextSize = 15, axisTitSize = 15, axisLabSize = 10,
     survSize = 0.5, type = c("single", "CI", "fill"),
-    palette = c("Dark2", "Set2", "Accent", "Paired", "Pastel1", "Pastel2", "Set1", "Set3"),
+    palette = c("Dark2", "Set2", "Accent", "Paired", "Pastel1", "Set1", "Set3"),
     jitter = c("none", "noEvents", "all"), censShape = 3,
     censSize = 5, legend = TRUE, legLabs = NULL,
     legTitle = "Strata", legTextSize = 10, legSize = 2,
@@ -141,9 +141,9 @@ autoplot(s1, legLabs="")$plot
 autoplot(s1, legend=FALSE)$plot
 data(rectum.dat, package="km.ci")
 s1 <- survfit(Surv(time, status) ~ 1, data=rectum.dat)
-### change confidence intervals to log Equal-Precision confidence bands
 \dontrun{
 library(km.ci)
+### change confidence intervals to log Equal-Precision confidence bands
 km.ci::km.ci(s1, method="logep")
 autoplot(s1, type="fill", legend=FALSE)$plot
 }
