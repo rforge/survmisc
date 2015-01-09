@@ -1,15 +1,17 @@
 ##' @name local
 ##' @rdname local
 ##' @title Local tests for a model
+##' @keywords htest
+##' 
 ##' @export locScore
-##' @aliases locScore
+##' 
 locScore <- function(x, ...){
     UseMethod("locScore")
 }
 ##' @rdname local
 ##' @aliases locScore.coxph
 ##' @method locScore coxph
-##' @S3method locScore coxph
+##' @export
 ##'
 ##' @param x A model of class \code{coxph}
 ##' @param ... Additional arguments (not implemented)
@@ -18,21 +20,23 @@ locScore <- function(x, ...){
 ##' \cr
 ##' There should be at least one coefficient to exclude and one to keep.
 ##' \cr
-##' This is a specified as vector of the same length as the no. of
-##' coefficients in the model. This should be a logical vector
+##' This is a specified as vector of the same length as the number of
+##' coefficients in the model.
+##' \cr
+##' This should be a logical vector
 ##' (i.e. composed of \code{TRUE} and \code{FALSE} or a vector of
 ##' \eqn{0}s and \eqn{1}s.
-##' \code{FALSE} or zeros indicate coefficients to exclude,
-##' \code{TRUE} or ones indicate coefficients to keep.
+##' \itemize{
+##'   \item \code{FALSE} or zeros indicate coefficients to exclude
+##'   \item \code{TRUE} or ones indicate coefficients to keep.
+##' }
+##' @param ties Method of handling ties when refitting model.
 ##' \cr
-##' @param ties Method of handling ties when refitting model. Must be
-##' one of \code{breslow}, \code{efron} or \code{exact}
+##' Must be one of \code{breslow}, \code{efron} or \code{exact}.
 ##' @return For \code{locScore} a \code{list} with the following elements,
 ##' which are \code{data.table}s:
-##' \cr
 ##' \item{coef}{coefficients from refitted model(s)}
 ##' \item{score}{hypothesis and chi-square test}
-##' \cr \cr
 ##' For \code{locLR} and \code{locWald}, a \code{data.table}
 ##' showing the hypothesis being tested and the results of the test.
 ##'
@@ -164,17 +168,17 @@ locScore.coxph <- function(x,
 ### get names of coefficients
     n1 <- names(x$coefficients)
 ### copy to modify (drop terms later)
-    dt2 <- copy(DT)
+    dt2 <- data.table::copy(DT)
     n2 <- n1[as.logical(hypo)]
     cn1 <- seq_along(colnames(dt2))
 ### get position of columns not in hypothesis
     i1 <- as.integer(cn1[!colnames(dt2) %in% n2])
 ### drop these unused columns
-    set(dt2, j=i1, value=NULL)
+    data.table::set(dt2, j=i1, value=NULL)
     stopifnot(attr(model.response(mFrame), "type")=="right")
-    y1 <- data.table(unclass(model.response(mFrame, "numeric")))
+    y1 <- data.table::data.table(unclass(model.response(mFrame, "numeric")))
     dt2[, c("t", "e") := y1]
-    coef1 <- coxph(Surv(t, e) ~ ., ties=ties, data=dt2)$coefficients
+    coef1 <- survival::coxph(Surv(t, e) ~ ., ties=ties, data=dt2)$coefficients
 ### add to results
     init1 <- as.vector(hypo)
     init1[hypo==1] <- coef1
@@ -193,13 +197,13 @@ locScore.coxph <- function(x,
     sc1 <- colSums(survival::coxph.detail(cox1)$score)
 ### results
 ###  init1 <- formatC(init1)
-    r1 <- data.table(t(init1))
-    setnames(r1, n1)
-    r2 <- data.table(t(hypo),
-                     sc1 %*% cox1$var %*% sc1,
-                     sum(hypo)
-                     )
-    setnames(r2, c(n1, "chiSq", "df"))
+    r1 <- data.table::data.table(t(init1))
+    data.table::setnames(r1, n1)
+    r2 <- data.table::data.table(t(hypo),
+                                 sc1 %*% cox1$var %*% sc1,
+                                 sum(hypo)
+                                 )
+    data.table::setnames(r2, c(n1, "chiSq", "df"))
     r2[, "pVal" := (1-stats::pchisq(chiSq, df))]
 ###
     return(list(coef=r1,
@@ -209,7 +213,7 @@ locScore.coxph <- function(x,
 ###
 ##' @rdname local
 ##' @aliases locLR
-##' @export locLR
+##' @export 
 ##'
 locLR <- function(x, ...){
     UseMethod("locLR")
@@ -217,7 +221,8 @@ locLR <- function(x, ...){
 ##' @rdname local
 ##' @aliases locLR.coxph
 ##' @method locLR coxph
-##' @S3method locLR coxph
+##' @export
+##' 
 ##' @examples
 ##' ###
 ##' data(larynx, package="KMsurv")
@@ -292,31 +297,31 @@ locLR.coxph <- function(x, ...,
 ### for R CMD check
     chiSq <- n1 <- NULL
 ### copy to modify (drop terms later)
-    dt2 <- copy(DT)
+    dt2 <- data.table::copy(DT)
     n1 <- names(x$coefficients)
     n2 <- n1[as.logical(hypo)]
     cn1 <- seq_along(colnames(dt2))
     i1 <- as.integer(cn1[!colnames(dt2) %in% n2])
-    set(dt2, j=i1, value=NULL)
+    data.table::set(dt2, j=i1, value=NULL)
     stopifnot(attr(model.response(mFrame), "type")=="right")
-    y1 <- data.table(unclass(model.response(mFrame, "numeric")))
+    y1 <- data.table::data.table(unclass(model.response(mFrame, "numeric")))
     dt2[, c("t", "e") := y1]
 ### refit with only those coefficients
     lr2 <- survival::coxph(Surv(t, e) ~ .,
                            data=dt2,
                            ties=ties
                            )$loglik[2]
-    r1 <- data.table(t(hypo),
-                     2 * (lr - lr2),
-                     sum(!hypo)
-                     )
-    setnames(r1, c(n1, "chiSq", "df"))
+    r1 <- data.table::data.table(t(hypo),
+                                 2 * (lr - lr2),
+                                 sum(!hypo)
+                                 )
+    data.table::setnames(r1, c(n1, "chiSq", "df"))
     r1[, "pVal" := (1-stats::pchisq(chiSq, df))]
     return(r1)
 }
 ##' @rdname local
 ##' @aliases locWald
-##' @export locWald
+##' @export 
 ##'
 locWald <- function(x, ...){
     UseMethod("locWald")
@@ -324,7 +329,8 @@ locWald <- function(x, ...){
 ##' @rdname local
 ##' @aliases locWald.coxph
 ##' @method locWald coxph
-##' @S3method locWald coxph
+##' @export
+##' 
 ##' @examples
 ##' ###
 ##' data(larynx, package="KMsurv")
@@ -361,7 +367,7 @@ locWald.coxph <- function(x, ...,
 ### swap 1s with 0s to show which coefficients have been preserved
 ### i.e. keep those which are thought to be ==0
 ### w1 - holds results
-    w1 <- data.table(1-c2)
+    w1 <- data.table::data.table(1-c2)
     w1[, c("chiSq", "df", "pVal") := 0.1]
 ###
     for (i in seq(nrow(c2))){
@@ -382,10 +388,10 @@ locWald.coxph <- function(x, ...,
     pos1 <- which(hypo==1)
     chi1 <- x$coefficients[pos1] %*% solve(x$var[pos1, pos1]) %*%  x$coefficients[pos1]
     df1 <- sum(hypo)
-    r1 <- data.table(t(hypo),
-                     chi1,
-                     df1)
-    setnames(r1, c(n1, "chiSq", "df"))
+    r1 <- data.table::data.table(t(hypo),
+                                 chi1,
+                                 df1)
+    data.table::setnames(r1, c(n1, "chiSq", "df"))
     r1[, "pVal" := (1-stats::pchisq(chiSq, df))]
     return(r1)
 }

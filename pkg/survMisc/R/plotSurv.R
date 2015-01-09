@@ -1,6 +1,5 @@
 ##' @name plot.Surv
 ##' @method plot Surv
-##' @S3method plot Surv
 ##' @export
 ##' @title Plot Survival object
 ##' @description
@@ -12,31 +11,30 @@
 ##' @param l Length of arrow. Length is \code{l/nrow(x)}
 ##' @param ... Additional arguments
 ##' @return A graph (base graphics).
-##' \cr
 ##' The type of graph depends on the \code{type} of the \code{Surv} object.
-##' \cr
-##' This is given by \code{attr(s,which="type")} :
-##' \cr
+##' This is given by \code{attr(s, which="type")} :
 ##' \item{counting}{Lines with an arrow pointing right if right censored}
 ##' \item{right}{Lines with an arrow pointing right if right censored}
 ##' \item{left}{Lines with an arrow pointing left if left censored}
 ##' \item{interval}{If censored:
 ##'  \itemize{
-##'  \item Lines with an arrow pointing right if right censored.
-##'  \item Lines with an arrow pointing left if left censored.
+##'    \item Lines with an arrow pointing right if right censored.
+##'    \item Lines with an arrow pointing left if left censored.
 ##'  }
 ##' If not censored:
 ##'  \itemize{
-##'  \item Lines if observations of more than one time point
-##'  \item Points if observation of one time only (i.e. start and end times are the same)
+##'    \item Lines if observations of more than one time point
+##'    \item Points if observation of one time only (i.e. start and end times are the same)
 ##'  }
 ##' }
-##' @examples
-##' df0 <- data.frame(t1=c(0,2,4,6,NA,NA,12,14),
-##'                   t2=c(NA,NA,4,6,8,10,16,18))
-##' s5 <- Surv(df0$t1,df0$t2,type="interval2")
-##' plot(s5)
 ##'
+##' @keywords plot
+##' 
+##' @examples
+##' df0 <- data.frame(t1=c(0, 2, 4, 6, NA, NA, 12, 14),
+##'                   t2=c(NA, NA, 4, 6, 8, 10, 16, 18))
+##' s5 <- Surv(df0$t1, df0$t2, type="interval2")
+##' plot(s5)
 plot.Surv <- function(x, l=3, ...){
     if(!class(x)=="Surv") stop("Only applies to class 'Surv'")
     if(!attr(x,which="type")=="right") warning("Applies to right censored data")
@@ -114,6 +112,6 @@ plot.Surv <- function(x, l=3, ...){
                    "\n point = exactly observed event time",
                    "")
     text1 <- " censored survival data\n arrow = censored observation"
-    tit1 <- paste(type1,text1,int1,sep="")
+    tit1 <- paste(type1,text1, int1, sep="")
     graphics::title(tit1)
 }
