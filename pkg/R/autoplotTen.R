@@ -141,6 +141,8 @@ autoplot <- function (object, ...) UseMethod("autoplot")
 #' @aliases autoplot.ten
 #' @export
 #' @examples
+#' ## examples are slow to run; see vignette for output from these
+#' \dontrun{
 #' ### autoplot.ten
 #' data("kidney", package="KMsurv")
 #' t1 <- ten(survfit(Surv(time, delta) ~ type, data=kidney))
@@ -168,7 +170,7 @@ autoplot <- function (object, ...) UseMethod("autoplot")
 #'           ggplot2::scale_fill_manual(values=c("red", "blue")))
 #' ## change limits of y-axis
 #' suppressMessages(a4 + ggplot2::scale_y_continuous(limits=c(0, 1)))
-#' 
+#' }
 autoplot.ten <- function(object,
                          ...,
                          title="Marks show times with censoring",
@@ -394,10 +396,11 @@ autoplot.ten <- function(object,
 #' @aliases autoplot.stratTen
 #' @export
 #' @examples
+#' \dontrun{
 #' data("pbc", package="survival")
 #' t1 <- ten(Surv(time, status==2) ~ trt + strata(edema), data=pbc, abbNames=FALSE)
 #' autoplot(t1)
-#' 
+#' }
 autoplot.stratTen <- function(object,
                               ...,
                               title=NULL,
@@ -481,6 +484,7 @@ autoplot.stratTen <- function(object,
 #' @export
 #' @examples
 #' ### autoplot.survfit
+#' \dontrun{
 #' data(kidney, package="KMsurv")
 #' s1 <- survfit(Surv(time, delta) ~ type, data=kidney)
 #' autoplot(s1, type="fill", survLineSize=2)
@@ -506,7 +510,7 @@ autoplot.stratTen <- function(object,
 #'     ggplot2::scale_fill_manual(values=c("red", "blue"))
 #' ## change limits of y-axis
 #' g1 + ggplot2::scale_y_continuous(limits=c(0, 1))
-#' 
+#' }
 autoplot.survfit <- function(object,
                              ...,
                              title="Marks show times with censoring",

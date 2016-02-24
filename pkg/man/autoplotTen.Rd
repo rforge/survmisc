@@ -205,6 +205,8 @@ Generate a \code{ggplot} for a \code{survfit} or \code{ten} object
 Please try to use \code{autoplot.ten} instead.
 }
 \examples{
+## examples are slow to run; see vignette for output from these
+\dontrun{
 ### autoplot.ten
 data("kidney", package="KMsurv")
 t1 <- ten(survfit(Surv(time, delta) ~ type, data=kidney))
@@ -232,10 +234,14 @@ a4 + list(ggplot2::scale_color_manual(values=c("red", "blue")),
           ggplot2::scale_fill_manual(values=c("red", "blue")))
 ## change limits of y-axis
 suppressMessages(a4 + ggplot2::scale_y_continuous(limits=c(0, 1)))
+}
+\dontrun{
 data("pbc", package="survival")
 t1 <- ten(Surv(time, status==2) ~ trt + strata(edema), data=pbc, abbNames=FALSE)
 autoplot(t1)
+}
 ### autoplot.survfit
+\dontrun{
 data(kidney, package="KMsurv")
 s1 <- survfit(Surv(time, delta) ~ type, data=kidney)
 autoplot(s1, type="fill", survLineSize=2)
@@ -261,6 +267,7 @@ g1 + ggplot2::scale_colour_manual(values=c("red", "blue")) +
     ggplot2::scale_fill_manual(values=c("red", "blue"))
 ## change limits of y-axis
 g1 + ggplot2::scale_y_continuous(limits=c(0, 1))
+}
 }
 \author{
 Chris Dardis. \code{autoplot.survfit} based on existing work by

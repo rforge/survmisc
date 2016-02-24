@@ -270,11 +270,11 @@ ci.ten <- function(x,
             n1[, V1])
         ## get lookup table for confidence coefficient
         d1s <- paste0("critical.value.", how, ".", CI)
-        do.call(data, list(eval(substitute(d1s)), package="km.ci"))
+        do.call(utils::data, list(eval(substitute(d1s)), package="km.ci"))
         d1 <- NULL
         do.call(assign, list("d1", eval(parse(text=d1s))))
         ## label lookup table
-        if (how=="nair"){
+        if (how=="nair") {
             rownames(d1) <- seq(0.1, 0.98, by=0.02)
             colnames(d1) <- seq(0.02, 0.6, by=0.02)
         } else {

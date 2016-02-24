@@ -99,6 +99,8 @@ cutp <- function(x, ...) UseMethod("cutp")
 #' data.table::setorder(c1, "z1")
 #' ## [] below is used to print data.table to console
 #' c1[]
+#' 
+#' \dontrun{
 #' ## compare to output from survival::coxph
 #' matrix(
 #'     unlist(
@@ -122,6 +124,7 @@ cutp <- function(x, ...) UseMethod("cutp")
 #' print(cutp(c3))
 #' ## doesn't apply to binary variables e.g. gender
 #' print(cutp(coxph(Surv(time, delta) ~ age + gender, data=k1)))
+#' }
 #' 
 cutp.coxph <- function(x, ...,
                        defCont=3){

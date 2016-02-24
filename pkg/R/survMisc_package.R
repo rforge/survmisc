@@ -52,7 +52,7 @@
 #' 
 #' @importFrom graphics plot grid title arrows segments points
 #' @importFrom grDevices dev.new graphics.off
-#' @importFrom utils head tail combn
+#' @importFrom utils head tail combn data packageVersion
 #' @importFrom stats formula as.formula terms is.empty.model model.matrix model.response printCoefmat predict runif pchisq pnorm qnorm anova
 #' 
 #' @import knitr

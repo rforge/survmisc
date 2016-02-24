@@ -140,7 +140,7 @@ gof.coxph <- function(x,
     dt2 <- data.table::data.table(n=tapply(e1[order(r1)], q1, length))
     dt2[, e := tapply(e1[order(r1)], q1, sum)]
     ## from survival:::predict.coxph
-    m1 <- residuals(x, type="martingale")
+    m1 <- stats::residuals(x, type="martingale")
     ## cumulative hazard = events - margtingale
     cumHaz <- e1[order(r1)] -  m1[order(r1)]
     ## no. expected

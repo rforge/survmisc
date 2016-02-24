@@ -530,6 +530,4 @@ setAttr.ten <- function(x, ...,
     return(x)
 }
 ## for R CMD check
-n <- status <- strat <- NULL
-#        setnames(xDTstr, sub("^strata\\(", "", names(xDTstr)))
- #       setnames(xDTstr, sub("\\)$", "", names(xDTstr)))
+n <- status <- strat <- time <- NULL

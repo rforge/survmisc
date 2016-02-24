@@ -402,4 +402,4 @@ probSupBr <- function(x) {
     1 - (4 / pi) * (sum(((( - 1)^k) / (2 * k + 1)) * exp(-(((pi^2) * (2 * k + 1)^2) / (8 * x^2)))))
 }
 ## for R CMD check
-S1 <- Var <- maxAbsZ <- chiSq <- Z <- NULL
+S1 <- Var <- maxAbsZ <- chiSq <- Z <- df <- NULL
