@@ -6,8 +6,8 @@
 #' \tabular{ll}{
 #'  Package: \tab survMisc\cr
 #'  Type: \tab Package\cr
-#'   Version: \tab 0.5.5 \cr
-#'  Date: \tab 2018-07-03\cr
+#'   Version: \tab 0.5.6 \cr
+#'  Date: \tab 2018-09-10\cr
 #' License: \tab GPL (>= 2) \cr
 #' LazyLoad: \tab yes
 #' }
