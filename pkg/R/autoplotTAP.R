@@ -1,5 +1,6 @@
 #' @name autoplotTableAndPlot
 #' @title Arrange a survival plot with corresponding table and legend.
+#' @description Arrange a survival plot with corresponding table and legend.
 #' 
 #' @include autoplotTen.R
 #' 
@@ -33,13 +34,14 @@
 #' @aliases autoplot.tableAndPlot
 #' @export
 #' @examples
+#' \dontrun{
 #' data("kidney", package="KMsurv")
 #' autoplot(survfit(Surv(time, delta) ~ type, data=kidney), type="fill")
 #' autoplot(ten(survfit(Surv(time, delta) ~ type, data=kidney)), type="fill")
 #' data("bmt", package="KMsurv")
 #' s2 <- survfit(Surv(time=t2, event=d3) ~ group, data=bmt)
 #' autoplot(s2)
-#' 
+#' }
 autoplot.tableAndPlot <- function(object, ...,
                                   hideTabLeg=TRUE,
                                   tabHeight=0.25){

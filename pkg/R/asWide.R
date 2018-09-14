@@ -1,6 +1,6 @@
 #' @name asWide
 #' @title Convert an object to "wide" or "long" form.
-#'
+#' @description Convert an object to "wide" or "long" form.
 #' @include ten.R
 #' @include nc.R
 #' @include print.R
@@ -36,11 +36,12 @@ asWide <- function(x, ...) UseMethod("asWide")
 #' @aliases asWide.ten
 #' @export
 #' @examples
+#' \dontrun{
 #' data("bmt", package="KMsurv")
 #' require("survival")
 #' t1 <- ten(c1 <- coxph(Surv(t2, d3) ~ z3*z10, data=bmt))
 #' asWide(t1)
-#' 
+#' }
 asWide.ten <- function(x, ...){
     data.table::setkey(x, t)
     t1 <- data.table::data.table("t" = x[, sort(unique(t))])
@@ -98,9 +99,10 @@ asLong <- function(x, ...) UseMethod("asLong")
 #' @aliases asLong.ten
 #' @export
 #' @examples
+#' \dontrun{
 #' asLong(asWide(t1))
 #' stopifnot(asLong(asWide(t1)) == ten(ten(t1)))
-#' 
+#' }
 asLong.ten <- function(x, ...){
     stopifnot(inherits(x, "ten"))
     ## add no. censored

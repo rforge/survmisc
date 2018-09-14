@@ -1,6 +1,8 @@
 #' @name cutp
 #' @title \bold{cut p}oint for a continuous variable in a
 #' model fit with \code{coxph} or \code{survfit}.
+#' @description \bold{cut p}oint for a continuous variable in a
+#' model fit with \code{coxph} or \code{survfit}.
 #'
 #' @include ten.R
 #' @include print.R

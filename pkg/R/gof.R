@@ -1,5 +1,6 @@
 #' @name gof
 #' @title \bold{g}oodness \bold{o}f \bold{f}it test for a \code{coxph} object
+#' @description \bold{g}oodness \bold{o}f \bold{f}it test for a \code{coxph} object
 #' 
 #' @rdname gof
 #' @export

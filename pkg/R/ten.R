@@ -1,5 +1,6 @@
 #' @name ten
 #' @title \bold{t}ime, \bold{e}vent(s) and \bold{n}umber at risk.
+#' @description \bold{t}ime, \bold{e}vent(s) and \bold{n}umber at risk.
 #'
 #' @include print.R
 #' @include asWide.R
@@ -169,17 +170,17 @@ ten.numeric <- function(x, ...){
 #' ten(s1)
 #'
 ten.Surv <- function(x, ..., 
-                    call=NULL){
+                     call=NULL){
   stopifnot(inherits(x, "Surv"))
   stopifnot(attributes(x)$type=="right")
   if(is.null(call)) call <- match.call()
   res1 <- data.table::data.table(unclass(x))
   data.table::setkey(res1, "time")
-    res1 <- res1[, list("n"=length(status),
-                        "e"=sum(status)),
-                 by=sort(time, na.last=TRUE)]
+  res1 <- res1[, list("e"=sum(status),
+                      "n"=length(status)),
+               by=sort(time, na.last=TRUE)]
   res1[, "n" := c(sum(n), sum(n) - cumsum(n)[ - length(n)])]
-  data.table::setnames(res1, c("t", "n", "e"))
+  data.table::setnames(res1, c("t", "e", "n"))
   data.table::setattr(res1, "class", c("ten", class(res1)))
   setAttr(res1,
           shape="long",
@@ -307,8 +308,8 @@ ten.formula <- function(x, ...,
 #' @export
 #' @examples
 #' ## not typically intended to be called directly
-#' mf1 <- model.frame(Surv(time, status==2) ~ age + strata(edema) + strata(spiders), pbc, 
-#'                    drop.unused.levels = TRUE)
+#' mf1 <- stats::model.frame(Surv(time, status==2) ~ age + strata(edema) + strata(spiders), pbc, 
+#'                           drop.unused.levels = TRUE)
 #' ten(mf1)
 #' 
 ten.data.frame <- function(x, ...,

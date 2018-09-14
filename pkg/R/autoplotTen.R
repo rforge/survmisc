@@ -1,5 +1,6 @@
 #' @name autoplotTen
 #' @title Generate a \code{ggplot} for a \code{survfit} or \code{ten} object
+#' @description Generate a \code{ggplot} for a \code{survfit} or \code{ten} object
 #'  
 #' @include ten.R
 #' @include print.R
@@ -332,8 +333,8 @@ autoplot.ten <- function(object,
     timeTicks <- match.arg(timeTicks)
     x1 <- get("range", envir=get("range", envir=layer_scales(g1)$x))
     times1 <- switch(EXPR=timeTicks,
-                     major=ggplot_build(g1)$panel$ranges[[1]]$x.major_source,
-                     minor=ggplot_build(g1)$panel$ranges[[1]]$x.minor_source,
+                     major=ggplot_build(g1)$layout$panel_ranges[[1]]$x.major_source,
+                     minor=ggplot_build(g1)$layout$panel_ranges[[1]]$x.minor_source,
                      custom=NaN,
                      days=seq(from=min(x1), to=max(x1), by=7L),
                      months=seq(from=min(x1), to=max(x1), by=12L))
@@ -580,21 +581,21 @@ autoplot.survfit <- function(object,
                                   surv=object$surv,
                                   upper=object$upper,
                                   lower=object$lower,
-                                  st=as.factor(st1))
-    ## make two rows for each stratum
+                                  cg=as.factor(st1))
+    ## make two rows for each covariate group
     ## for time=0 to time=time of first event
-    dt2 <- data.table::rbindlist(list(dt1[, .SD[1, ], by=st],
-                                      dt1[, .SD[1, ], by=st]))
+    dt2 <- data.table::rbindlist(list(dt1[, .SD[1, ], by=cg],
+                                      dt1[, .SD[1, ], by=cg]))
     ## set n.event and n.censored to zero
-    dt2[, c("n.event", "n.censor") := list(0), by=st]
+    dt2[, c("n.event", "n.censor") := list(0), by=cg]
     ## set surv, upper and lower to one
-    dt2[, c("surv", "upper", "lower") := list(1), by=st]
+    dt2[, c("surv", "upper", "lower") := list(1), by=cg]
     ## set first time to zero
-    dt2[seq(length(unique(dt2$st))), "time" := (0L) ]
+    dt2[seq(length(unique(dt2$cg))), "time" := (0L) ]
     ## reorder to allow binding
     data.table::setcolorder(dt2, names(dt1))
     dt1 <- data.table::rbindlist(list(dt2, dt1))
-    if (is.null(legOrd)) legOrd <- dt1[, seq.int(levels(st))]
+    if (is.null(legOrd)) legOrd <- dt1[, seq.int(levels(cg))]
     ## 
     ## jitter
     ## 
@@ -602,19 +603,19 @@ autoplot.survfit <- function(object,
     ## for groups with no events add random no.to survival (by strata)
     if (jitter=="noEvents") {
         ## add column to indicate no. events by group
-        dt1[, s1 := sum(n.event), by=list(st)]
-        dt1[s1==0, surv := surv+(runif(1, 0.01, 0.05)), by=st]
+        dt1[, s1 := sum(n.event), by=list(cg)]
+        dt1[s1==0, surv := surv+(runif(1, 0.01, 0.05)), by=cg]
     }
     if(jitter=="all"){
         ## for groups with no events add random no.to survival (by strata)
-        dt1[, surv := surv+(runif(1, 0.01, 0.05)), by=st]
+        dt1[, surv := surv+(runif(1, 0.01, 0.05)), by=cg]
     }
     ##
-    dt1 <- dt1[order(st)]
+    dt1 <- dt1[order(cg)]
     ## 
     ## plot single lines only
     ## 
-    g1 <- ggplot(data=dt1, aes(group=st, colour=st, fill=st)) +
+    g1 <- ggplot(data=dt1, aes(group=cg, colour=cg, fill=cg)) +
         geom_step(aes(x=time, y=surv), direction="hv", size=survLineSize)
     ##
     type <- match.arg(type)
@@ -631,22 +632,20 @@ autoplot.survfit <- function(object,
                           u=unique(upper),
                           minT=as.numeric(min(time)),
                           time=as.numeric(time)
-                          ), by=list(surv, st)]
+                          ), by=list(surv, cg)]
         ## make max. time column
-        dt2[, "maxT" := c(minT[2:length(minT)], NA), by=st]
+        dt2[, "maxT" := c(minT[2:length(minT)], NA), by=cg]
         ## merge columns
-        dt1 <- merge(dt1, dt2, by=c("time", "surv", "st"), all.y=TRUE)
-        dt1 <- dt1[order(st)]
+        dt1 <- merge(dt1, dt2, by=c("time", "surv", "cg"), all.y=TRUE)
+        dt1 <- dt1[order(cg)]
         ## add shading
-        g1 <- g1 + geom_rect(data=dt1, aes(x=NULL, y=NULL,
-                                           ymax=surv, ymin=l,
+        g1 <- g1 + geom_rect(data=dt1, aes(ymax=surv, ymin=l,
                                            xmax=maxT, xmin=minT,
-                                           colour=st, group=st, fill=st),
+                                           colour=cg, group=cg, fill=cg),
                              alpha=alpha, size=fillLineSize) +
-            geom_rect(data=dt1, aes(x=NULL, y=NULL,
-                                    ymax=u, ymin=surv,
+            geom_rect(data=dt1, aes(ymax=u, ymin=surv,
                                     xmax=maxT, xmin=minT,
-                                    colour=st, group=st, fill=st),
+                                    colour=cg, group=cg, fill=cg),
                       alpha=alpha, size=fillLineSize)
     }
     ## add lines to show times where subjects censored
@@ -685,8 +684,8 @@ autoplot.survfit <- function(object,
     timeTicks <- match.arg(timeTicks)
     x1 <- get("range", envir=get("range", envir=layer_scales(g1)$x))
     times1 <- switch(EXPR=timeTicks,
-                     major=ggplot_build(g1)$panel$ranges[[1]]$x.major_source,
-                     minor=ggplot_build(g1)$panel$ranges[[1]]$x.minor_source,
+                     major=ggplot_build(g1)$layout$panel_ranges[[1]]$x.major_source,
+                     minor=ggplot_build(g1)$layout$panel_ranges[[1]]$x.minor_source,
                      custom=NaN,
                      weeks=seq(from=min(x1), to=max(x1), by=7L),
                      months=seq(from=min(x1), to=max(x1), by=12L))
@@ -700,8 +699,8 @@ autoplot.survfit <- function(object,
         theme(title=element_text(size=titleSize),
               legend.text=element_text(size=legLabSize),
               legend.title=element_text(size=legTitleSize),
-              axis.text = element_text(size = axisLabSize),
-              axis.title = element_text(size = axisTitleSize))
+              axis.text = element_text(size=axisLabSize),
+              axis.title = element_text(size=axisTitleSize))
     ## remove legend if required
     if(!legend) g1 <- g1 + theme(legend.position="none")
     ## p value for log-rank test (only if >=2 groups)
@@ -726,15 +725,15 @@ autoplot.survfit <- function(object,
         n.risk=summary(object, times = times1, extend = TRUE)$n.risk)
     ## if intercept-only model
     if (is.null(object$strata)) {
-        dt3[, "st" := as.factor(rep(1, length(times1)))]
+        dt3[, "cg" := as.factor(rep(1, length(times1)))]
     } else {
-        dt3[, "st" := summary(object, times=times1, extend=TRUE)$strata]
+        dt3[, "cg" := summary(object, times=times1, extend=TRUE)$strata]
     }
     ## change names of strata to legend labels
-    if(!is.null(legLabs)) dt3[, "st" := factor(st, labels=legLabs) ]
+    if(!is.null(legLabs)) dt3[, "cg" := factor(cg, labels=legLabs) ]
     ## table
     ## reverse here to plot in same order as in main plot
-    g2 <- ggplot(data=dt3, aes(x=time, y=st, shape=st)) +
+    g2 <- ggplot(data=dt3, aes(x=time, y=cg, shape=cg)) +
         geom_point(size=0) +
         geom_text(aes(label=n.risk), colour=1, size=nRiskSize) +
         scale_x_continuous(name=xLab,
@@ -742,8 +741,8 @@ autoplot.survfit <- function(object,
                            breaks=times1) +
         ## reverse here to plot in same order as in main plot
         scale_y_discrete(name=legTitle,
-                         breaks=levels(dt3$st),
-                         labels=levels(dt3$st)) +
+                         breaks=levels(dt3$cg),
+                         labels=levels(dt3$cg)) +
         ggtitle(tabTitle) +
         theme(axis.text = element_text(size=axisLabSize),
               axis.title = element_text(size=axisTitleSize),

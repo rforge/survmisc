@@ -1,5 +1,6 @@
 #' @name comp
 #' @title compare survival curves
+#' @description compare survival curves
 #' 
 #' @include ten.R
 #' @include asWide.R
@@ -13,13 +14,13 @@
 #'
 comp <- function(x, ...) UseMethod("comp")
 #'
-#' @param x A \code{tne} object
+#' @param x A \code{ten} object
 #' @param p \eqn{p} for Fleming-Harrington test
 #' @param q \eqn{q} for Fleming-Harrington test
 #' @param scores scores for tests for trend
 #' @inheritParams sf.ten
 #' 
-#' @return The \code{tne} object is given
+#' @return The \code{ten} object is given
 #'  additional \code{attributes}.
 #'  \cr
 #' The following are always added:
@@ -83,6 +84,7 @@ comp <- function(x, ...) UseMethod("comp")
 #'  \eqn{1} \tab log-rank \tab \cr
 #'  \eqn{n_i}{n[i]} \tab Gehan-Breslow generalized Wilcoxon \tab \cr
 #'  \eqn{\sqrt{n_i}}{sqrt(n[i])} \tab Tarone-Ware \tab \cr
+#'  \eqn{\frac{n}{n-1}}{n/(n-1)} Teniola Babalola's weight \cr
 #'  \eqn{S1_i}{S1[i]} \tab Peto-Peto's modified survival estimate \tab
 #'                    \eqn{\bar{S}(t)=\prod{1 - \frac{e_i}{n_i + 1}}}{
 #'                             S1(t) = cumprod(1 - e / (n + 1))} \cr
@@ -117,7 +119,7 @@ comp <- function(x, ...) UseMethod("comp")
 #' \cr \cr
 #' Then calculate:
 #' \deqn{ Q = \frac{ \sup{|Z(t)|}}{\sigma(\tau)}, \quad t<\tau }{
-#' Q = sup( |Z(t)| ) / sigma(tau), t<tau}
+#'        Q = sup( |Z(t)| ) / sigma(tau), t < tau}
 #' When the null hypothesis is true,
 #' the distribution of \eqn{Q} is approximately
 #'  \deqn{Q \sim \sup{|B(x)|, \quad 0 \leq x \leq 1}}{
@@ -126,7 +128,7 @@ comp <- function(x, ...) UseMethod("comp")
 #'  \deqn{Pr[\sup|B(t)|>x] = 1 - \frac{4}{\pi}
 #'                           \sum_{k=0}^{\infty}
 #'                           \frac{(- 1)^k}{2k + 1} \exp{\frac{-\pi^2(2k + 1)^2}{8x^2}}}{
-#'        Pr[sup|B(t)|>x] = 1 - 4/pi sum((-1)^k / (2 * k + 1) * exp(-pi^2 (2k + 1)^2 / x^2))}
+#'        Pr[sup|B(t)| > x] = 1 - 4 / pi sum((-1)^k / (2 * k + 1) * exp(-pi^2 (2k + 1)^2 / x^2))}
 #' \bold{Tests for trend} are designed to detect ordered differences in survival curves.
 #' \cr
 #' That is, for at least one group:
@@ -176,26 +178,29 @@ comp <- function(x, ...) UseMethod("comp")
 #' A Generalized Wilcoxon Test for Comparing Arbitrarily
 #' Singly-Censored Samples.
 #' Biometrika 1965 Jun. 52(1/2):203--23.
-#' \href{http://www.jstor.org/stable/2333825}{JSTOR}
+#' \samp{http://www.jstor.org/stable/2333825} JSTOR
 #' @references Tarone RE, Ware J 1977
 #' On Distribution-Free Tests for Equality of Survival Distributions.
 #' \emph{Biometrika};\bold{64}(1):156--60.
-#' \href{http://www.jstor.org/stable/2335790}{JSTOR}
+#' \samp{http://www.jstor.org/stable/2335790} JSTOR
 #' @references Peto R, Peto J 1972
 #' Asymptotically Efficient Rank Invariant Test Procedures.
 #' \emph{J Royal Statistical Society} \bold{135}(2):186--207.
-#' \href{http://www.jstor.org/stable/2344317}{JSTOR}
+#' \samp{http://www.jstor.org/stable/2344317} JSTOR
 #' @references Fleming TR, Harrington DP, O'Sullivan M 1987
 #' Supremum Versions of the Log-Rank and Generalized Wilcoxon Statistics.
 #' \emph{J  American Statistical Association} \bold{82}(397):312--20.
-#' \href{http://www.jstor.org/stable/2289169}{JSTOR}
+#' \samp{http://www.jstor.org/stable/2289169} JSTOR
 #' @references Billingsly P 1999
 #' \emph{Convergence of Probability Measures.}
 #' New York: John Wiley & Sons.
-#' \href{http://dx.doi.org/10.1002/9780470316962}{Wiley (paywall)}
+#' \samp{http://dx.doi.org/10.1002/9780470316962} Wiley (paywall)
 #' 
 #' @examples
 #' ## Two covariate groups
+#' data("leukemia", package="survival")
+#' f1 <- survfit(Surv(time, status) ~ x, data=leukemia)
+#' comp(ten(f1))
 #' ## K&M 2nd ed. Example 7.2, Table 7.2, pp 209--210.
 #' data("kidney", package="KMsurv")
 #' t1 <- ten(Surv(time=time, event=delta) ~ type, data=kidney)
@@ -248,11 +253,11 @@ comp.ten <- function(x,
     t1 <- x[e>0, t, by=t][, t]
     ## WEIGHTS
     wt1 <- data.table::data.table(
-        array(data=1, dim=c(length(t1), 5L + fh1)))
+        array(data=1, dim=c(length(t1), 6L + fh1)))
     ## names for F-H tests
     FHn <- paste("FH_p=", p, "_q=", q, sep="")
     ## names for weights
-    n1 <- c("1", "n", "sqrtN", "S1", "S2", FHn)
+    n1 <- c("1", "n", "sqrtN", "n/n-1", "S1", "S2", FHn)
     data.table::setnames(wt1, n1)
     ## Gehan-Breslow generalized Wilcoxon, weight = n
     data.table::set(wt1, j="n",
@@ -260,6 +265,9 @@ comp.ten <- function(x,
     ## Tarone-Ware, weight = sqrt(n)
     data.table::set(wt1, j="sqrtN",
                     value=wt1[, sqrt(.SD), .SDcols="n"])
+    ## Teniola Babalola, weight = n/n-1
+    data.table::set(wt1, j="n/n-1",
+                    value=wt1[, .SD / (.SD - 1), .SDcols="n"])
     ## Peto-Peto, weight = S(t) = modified estimator of survival function
     data.table::set(wt1, j="S1",
                     value=cumprod(x[e > 0, 1 - sum(e) / (max(n) + 1), by=t][, V1]))
@@ -301,7 +309,7 @@ comp.ten <- function(x,
     if (ncg1==2) {
 ### log-rank family
         ## make observed - expected for one group
-        eMP1 <- unlist(eMP1[, .SD, .SDcols=length(eMP1)])
+        eMP1 <- unlist(eMP1[, .SD, .SDcols=(length(eMP1) - 1L)])
         data.table::set(res1, j="Q",
                         value=colSums(wt1 * eMP1))
         data.table::set(res1, j="Var",
@@ -310,7 +318,7 @@ comp.ten <- function(x,
 ###  aka Renyi statistics
 ###  (analagous to 2-sample Kolmogorov-Smirnov test)
         n3 <- c("W", "maxAbsZ", "Var", "Q", "pSupBr")
-        res2 <- data.table::data.table(matrix(0, nrow=5 + fh1, ncol=length(n3)))
+        res2 <- data.table::data.table(matrix(0, nrow=ncol(wt1), ncol=length(n3)))
         data.table::setnames(res2, n3)
         data.table::set(res2, j=1L, value=n1)
         data.table::set(res2, j="maxAbsZ",

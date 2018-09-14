@@ -1,7 +1,8 @@
 #' @name rsq
 #' @title r^2 measures for a a \code{coxph} or \code{survfit} model
+#' @description r^2 measures for a a \code{coxph} or \code{survfit} model
 #'
-#' @param x A \code{survfit} or \code{coxph} object
+#' @param x A \code{survfit} or \code{coxph} object.
 #' @param sigD \bold{sig}nificant \bold{d}igits (for ease of display).
 #' If \code{sigD=NULL}, will return the original numbers.
 #' @inheritParams sf.ten
@@ -27,18 +28,18 @@
 #' @references Nagelkerke NJD, 1991.
 #' A Note on a General Definition of the Coefficient of Determination.
 #' \emph{Biometrika} \bold{78}(3):691--92.
-#' \href{http://www.jstor.org/stable/2337038}{JSTOR}
+#' \samp{http://www.jstor.org/stable/2337038} JSTOR
 #' @references
 #' O'Quigley J, Xu R, Stare J, 2005.
 #' Explained randomness in proportional hazards models.
 #' \emph{Stat Med} \bold{24}(3):479--89.
-#' \href{http://dx.doi.org/10.1002/sim.1946}{Wiley (paywall)}
-#' \href{http://www.math.ucsd.edu/~rxu/igain2.pdf}{Available at UCSD}
+#' \samp{http://dx.doi.org/10.1002/sim.1946} Wiley (paywall)
+#' \samp{http://www.math.ucsd.edu/~rxu/igain2.pdf} UCSD (free)
 #' @references
 #' Royston P, 2006.
 #' Explained variation for survival models.
 #' \emph{The Stata Journal} \bold{6}(1):83--96.
-#' \href{http://www.stata-journal.com/sjpdf.html?articlenum=st0098}{The Stata Journal}
+#' \samp{http://www.stata-journal.com/sjpdf.html?articlenum=st0098}
 #'
 #' @rdname rsq
 #' @export 

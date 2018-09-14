@@ -1,22 +1,10 @@
 Package: survMisc
 Type: Package
-Version: 0.5.0
-Date: 2016-02-22
-Depends:
-    survival
-Imports:
-    graphics,
-    grDevices,
-    stats,
-    utils,
-    knitr,
-    KMsurv,
-    ggplot2,
-    data.table,
-    zoo,
-    grid,
-    gridExtra,
-    km.ci
+Version: 0.5.6
+Date: 2018-09-12
+Depends: survival
+Imports: graphics, grDevices, stats, utils, knitr, KMsurv, ggplot2,
+        data.table, zoo, grid, gridExtra, km.ci, xtable
 Author: Chris Dardis
 Maintainer: Chris Dardis <christopherdardis@gmail.com>
 License: GPL-2
@@ -27,22 +15,9 @@ Description: A collection of functions to help in the analysis of
 BugReports: https://github.com/dardisco/survMisc/issues
 LazyData: true
 VignetteBuilder: knitr
-Collate:
-    'sf.R'
-    'nc.R'
-    'ci.R'
-    'autoplotTAP.R'
-    'autoplotTen.R'
-    'print.R'
-    'asWide.R'
-    'ten.R'
-    'COV.R'
-    'predict.R'
-    'comp.R'
-    'cutp.R'
-    'gastric.R'
-    'gof.R'
-    'onAttach.R'
-    'plotSurv.R'
-    'rsq.R'
-    'survMisc_package.R'
+Collate: 'ten.R' 'nc.R' 'sf.R' 'ci.R' 'autoplotTAP.R' 'autoplotTen.R'
+        'print.R' 'asWide.R' 'COV.R' 'predict.R' 'comp.R' 'cutp.R'
+        'gastric.R' 'gof.R' 'onAttach.R' 'profLik.R' 'rsq.R'
+        'survMisc_package.R' 'xtable.R'
+NeedsCompilation: no
+RoxygenNote: 6.0.1

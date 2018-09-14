@@ -1,5 +1,6 @@
 #' @name ci
 #' @title \bold{c}onfidence \bold{i}ntervals for survival curves.
+#' @description \bold{c}onfidence \bold{i}ntervals for survival curves.
 #' 
 #' @include ten.R
 #' @include sf.R
@@ -192,12 +193,12 @@
 #' Nair V, 1984.
 #' Confidence bands for survival functions with censored data: a comparative study.
 #' \emph{Technometrics}. \bold{26}(3):265-75.
-#' \href{http://www.jstor.org/stable/1267553}{JSTOR}.
+#' \samp{http://www.jstor.org/stable/1267553} JSTOR
 #' @references
 #' Hall WJ, Wellner JA, 1980.
 #' Confidence bands for a survival curve from censored data.
 #' \emph{Biometrika}. \bold{67}(1):133-43.
-#' \href{http://www.jstor.org/stable/2335326}{JSTOR}.
+#' \samp{http://www.jstor.org/stable/2335326} JSTOR
 #' 
 #' @seealso \code{\link{sf}}
 #' @seealso \code{\link{quantile}}

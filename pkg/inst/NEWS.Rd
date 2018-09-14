@@ -1,6 +1,46 @@
 \name{NEWS}
 \title{NEWS file for the survMisc package}
 
+\section{07/03/18: Version 0.5.5}{
+  \itemize{
+    \item Removing \code{plot} method for \code{Surv} objects, so as to
+  avoid overwriting the new \code{plot.Surv} method in
+  \code{package:survival}.
+   \item A substantial revision to this package in planned in the months
+  ahead and is planned to occur with version 0.6.0.
+  }
+}
+
+\section{11/22/16: Version 0.5.4}{
+  \itemize{
+    \item Minor update to take account of the release of \code{package:ggplot2 2.2.0}.
+  }
+}
+
+\section{7/6/16: Version 0.5.3}{
+  \itemize{
+    \item Corrected error in \code{sf}. Thanks to Walton Jones for
+  bringing this to my attention. 
+    \item Added some \code{xtable} methods applicable to survival data.
+  }
+}
+
+\section{5/16/16: Version 0.5.2}{
+  \itemize{
+    \item Corrected error in \code{comp} when comparing two groups. This was
+    present in Versions 0.5.0 and 0.5.1. Thanks to onesandzeroes and drcanak for pointing this out.
+    \item Also re-named the vignette again.
+  }
+}
+
+\section{5/11/16: Version 0.5.1}{
+  \itemize{
+    \item Have included \code{profLik} function from version 0.4.6
+    again.
+    \item Re-named the vignette.
+  }
+}
+
 \section{2/16/16: Version 0.5.0}{
   \itemize{ 
     \item This is a re-write 'from the ground up'. A more 'oject-oriented'
@@ -10,13 +50,13 @@
   
   \item A number of functions and datasets have been left out temporarily for this release
   in order to focus on the 'core' package elements. These will be added
-  back in due course.
+  back in due course, most likely version 0.6.0.
   
   \item
    \describe{
     \item{\code{cutp}}{Error in calculation of log-rank test in some in
-      cases has been fixed. Code also simplified to make better use of data.table.
-      Thanks in particular to Rachel Alkallas for her helpful
+      cases has been fixed. Code also simplified to make better use of \code{data.table}.
+      Thanks in particular to Rached Alkallas for her helpful
       work on this. As suggested:
       \cr
       \emph{There was an problem with the previous version [0.4.6], which
@@ -49,8 +89,7 @@
       re-ordering.
     }
     
-    \item{\code{rsq.coxph}}{Typo fixed. Thanks to Nir Y Krakauer for
-      bringing this to my attention.}
+    \item{\code{rsq.coxph}}{Typo fixed. Thanks to Nir Y Krakauer for bringing this to my attention.}
   }
 }}
 

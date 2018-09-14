@@ -1,5 +1,6 @@
 #' @name print
 #' @title \code{print} methods
+#' @description \code{print} methods
 #' 
 #' @include autoplotTen.R
 #' 

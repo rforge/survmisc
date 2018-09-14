@@ -1,6 +1,8 @@
 #' @name sf
 #' @title \bold{s}urvival (or hazard) \bold{f}unction
 #' based on \eqn{e} and \eqn{n}.
+#' @description \bold{s}urvival (or hazard) \bold{f}unction
+#' based on \eqn{e} and \eqn{n}.
 #'
 #' @include ten.R
 #'
@@ -125,30 +127,33 @@ sf.ten <- function(x, ...,
   ## name of variance
   nv1 <- paste0(what, "v")
   ## functions to use
-  if (what=="S"){
+  if (what=="S") {
     fun1 <- km
     fun1v <- kmv
   } else {
     fun1 <- na
     fun1v <- nav
   }
-  if (attr(x, "ncg")==0){
-    cg <- quote(NULL)
+  if (attr(x, "ncg")==0) {
+      cg <- quote(NULL)
+      ncg <- quote(n)
   } else {
-    cg <- quote(cg)
+      cg <- quote(cg)
+      ncg <- quote(ncg)
   }
-  if (is.null(times)){
+  if (is.null(times)) {
     res1 <- x[, t, by=eval(cg)]
   } else {
-    res1 <- data.table::data.table(
-      data.table::rbindlist(
-        lapply(times, function(i) x[t <= i, list("t1"=i, "t"=max(t)),
-                                    by=eval(cg)])))
+      res1 <- data.table::data.table(
+          data.table::rbindlist(
+              lapply(times, function(i) x[t <= i,
+                                          list("t1"=i, "t"=max(t)),
+                                          by=eval(cg)])))
   }
   res1[, (what) := x[which(t %in% res1$t),
-                  fun1(e, n), by=eval(cg)]$V1]
+                     fun1(e=e, n=eval(ncg)), by=eval(cg)]$V1]
   res1[, (nv1) := x[which(t %in% res1$t),
-                 fun1v(e, n), by=eval(cg)]$V1]
+                    fun1v(e=e, n=eval(ncg)), by=eval(cg)]$V1]
   if (SCV) res1[, "SCV" := Sv / S^2]
   data.table::setattr(x, "sf", res1)
   return(attr(x, "sf"))

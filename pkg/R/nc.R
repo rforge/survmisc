@@ -1,6 +1,7 @@
 #' @name nc
 #' @title Add \bold{n}umber \bold{c}ensored.
-#'
+#' @description Add \bold{n}umber \bold{c}ensored.
+#' 
 #' @include ten.R
 #' @include print.R
 #' 

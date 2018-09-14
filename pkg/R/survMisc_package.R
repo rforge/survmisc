@@ -1,12 +1,13 @@
 #' @name survMisc_package
 #' @title Miscellaneous Functions for Survival Analysis
+#' @description Miscellaneous Functions for Survival Analysis
 #' 
 #' @description
 #' \tabular{ll}{
 #'  Package: \tab survMisc\cr
 #'  Type: \tab Package\cr
-#'   Version: \tab 0.5\cr
-#'  Date: \tab 2015-07-15\cr
+#'   Version: \tab 0.5.5 \cr
+#'  Date: \tab 2018-07-03\cr
 #' License: \tab GPL (>= 2) \cr
 #' LazyLoad: \tab yes
 #' }
@@ -50,15 +51,16 @@
 #' @keywords package
 #' @concept survival
 #' 
-#' @importFrom graphics plot grid title arrows segments points
+#' @importFrom graphics plot abline arrows grid mtext points title segments
 #' @importFrom grDevices dev.new graphics.off
 #' @importFrom utils head tail combn data packageVersion
-#' @importFrom stats formula as.formula terms is.empty.model model.matrix model.response printCoefmat predict runif pchisq pnorm qnorm anova
+#' @importFrom stats anova formula as.formula is.empty.model model.frame model.matrix model.response printCoefmat predict runif pchisq pnorm qchisq qnorm terms update
 #' 
 #' @import knitr
 #' @import survival
 #' @import ggplot2
 #' 
+## the following are imported for their datasets:
 #' @import KMsurv
 #' @import km.ci
 #' 
@@ -66,8 +68,8 @@
 #' @importFrom zoo na.locf.default
 #' @importFrom grid unit.pmax
 #' @importFrom gridExtra grid.arrange
+#' @importFrom xtable xtable print.xtable
 #' 
 NULL
-## the following are imported for their datasets:
 ## KMsurv
 ## km.ci

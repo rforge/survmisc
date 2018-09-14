@@ -1,5 +1,6 @@
 #' @name predict
 #' @title predicted events
+#' @description predicted events
 #' 
 #' @include ten.R
 #' @include print.R
